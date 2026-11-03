@@ -126,7 +126,8 @@ Este projeto está organizado nas pastas descritas abaixo:
 
 ### Estrutura de Pastas
 
-*Reflete o projeto Spring dentro de ´´´bash backend/```*
+*Reflete o projeto Spring dentro de `backend/`
+*
 
 *   *src/main/java/com/arenahub/arenahub/*: Código-fonte principal da aplicação.
     *   *controller/*: Recebem as requisições e devolvem as respostas (telas/API).
