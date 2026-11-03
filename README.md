@@ -48,7 +48,7 @@ O Arena Hub é um sistema web em que o próprio usuário consulta a disponibilid
 
 ### Passo a passo
 1. **Baixe o sistema:** https://github.com/jvrezendem/arenaHUB → botão **Code** → **Download ZIP** → extraia em uma pasta.
-2. **Coloque o arquivo `.env`** (recebido da equipe) na **raiz** da pasta extraída, ao lado do `README.md`.
+2. **Coloque o arquivo `.env`** (recebido da equipe) dentro da pasta **`backend/`**, ao lado do `pom.xml`.
 3. **Inicie o backend:** abra um terminal na pasta `backend/` e rode:
    - Linux/macOS:
      ```bash
@@ -69,7 +69,7 @@ O Arena Hub é um sistema web em que o próprio usuário consulta a disponibilid
 ### Problemas comuns
 * **`java` não é reconhecido:** instale o Java 21 e reabra o terminal.
 * **`npm` não é reconhecido:** instale o Node.js e reabra o terminal.
-* **Erro de conexão com o banco:** confira se o `.env` está na raiz do projeto e se há internet.
+* **Erro de conexão com o banco:** confira se o `.env` está na pasta `backend/` e se há internet.
 * **Porta 8080 já em uso:** adicione `server.port=8081` ao `backend/src/main/resources/application.properties` e ajuste a URL da API no frontend.
 
 ---
@@ -84,9 +84,9 @@ Siga os passos abaixo para preparar o ambiente e se tornar dev do projeto.
    cd arenaHUB
    ```
    *Alternativa:* baixe o ZIP pelo botão **Code → Download ZIP** e extraia.
-2. **Configure as variáveis de ambiente:** na raiz, copie `.env.example` para `.env` e preencha com as credenciais do Neon (peça à equipe; **nunca suba o `.env` no GitHub**):
+2. **Configure as variáveis de ambiente:** a partir da raiz do projeto, copie `backend/.env.example` para `backend/.env` e preencha com as credenciais do Neon (peça à equipe; **nunca suba o `.env` no GitHub**):
    ```bash
-   cp .env.example .env
+   cp backend/.env.example backend/.env
    ```
    ```
    DB_URL=jdbc:postgresql://<host>.neon.tech/<banco>?sslmode=require
@@ -95,7 +95,7 @@ Siga os passos abaixo para preparar o ambiente e se tornar dev do projeto.
    ```
    O `backend/src/main/resources/application.properties` lê essas variáveis:
    ```properties
-   spring.config.import=optional:file:../.env[.properties]
+   spring.config.import=optional:file:.env[.properties]
    spring.datasource.url=${DB_URL}
    spring.datasource.username=${DB_USER}
    spring.datasource.password=${DB_PASSWORD}
@@ -157,7 +157,6 @@ arenahub/
 ├── backend/        projeto Spring Boot
 ├── frontend/       projeto React
 ├── docs/           documentação do projeto
-├── .env.example
 ├── .gitignore
 └── README.md
 ```
@@ -171,6 +170,7 @@ arenahub/
         *   **`dto/`**: objetos de transferência de dados (ex.: `AulaResponseDto`, `UsuarioRequestDto`).
     *   **`src/main/resources/application.properties`**: configurações (banco, porta etc.).
     *   **`src/test/java/`**: testes automatizados.
+    *   **`.env.example`**: modelo das variáveis de ambiente (sem dados reais). O `.env` real fica nesta mesma pasta e não é versionado.
     *   **`pom.xml`**: dependências e configuração do Maven.
     *   **`mvnw` / `mvnw.cmd`**: Maven Wrapper (roda o projeto sem instalar o Maven).
 *   **`frontend/`**: interface web em React.
@@ -180,7 +180,6 @@ arenahub/
 *   **`docs/`**: documentação do projeto.
     *   **`requisitos/`**: documento de requisitos, diagramas (arquivos originais do Astah) e protótipo de interfaces.
     *   **`padroes-adotados/`**: padrões da equipe, como "Regras de Verificação e Análise de Requisitos".
-*   **`.env.example`**: modelo das variáveis de ambiente (sem dados reais).
 
 ---
 
