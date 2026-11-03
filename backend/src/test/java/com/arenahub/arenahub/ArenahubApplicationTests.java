@@ -1,0 +1,13 @@
+package com.arenahub.arenahub;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class ArenahubApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
