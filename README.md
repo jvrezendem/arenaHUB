@@ -3,11 +3,11 @@
 > Sistema web desenvolvido para facilitar o agendamento de horários em quadras de areia. Por meio da plataforma, o próprio usuário consulta a disponibilidade e cadastra suas aulas de forma automática, a qualquer hora e sem precisar entrar em contato com um representante da arena. Com isso, o sistema reduz a troca manual de mensagens, evita conflitos e erros de agendamento e dá mais autonomia ao cliente, ao mesmo tempo em que simplifica a rotina de organização da arena.
 
 **Disciplina:** Engenharia de Software
-**Instituição:** Universidade Federal de Lavras
+**Instituição:** Universidade Federal de Lavras - UFLA
 **Semestre:** 2026-2
 **Equipe:**
 * [Nome 1] — [papel]
-* [Nome 2] — [papel]
+* João Vitor Rezende Marciano — Desenvolvedor Full-Stack
 * Paulo Sergio Mendes Taciano — Desenvolvedor Full-Stack
 
 ---
@@ -113,15 +113,10 @@ Siga os passos abaixo para preparar o ambiente e se tornar dev do projeto.
 
 ## 4. Tecnologias
 
-| Camada | Tecnologia |
-|--------|-----------|
-| Linguagem | Java 21 |
-| Framework | Spring Boot |
-| Build / dependências | Maven |
-| Persistência | Spring Data JPA |
-| Banco de dados | PostgreSQL hospedado no [Neon](https://neon.tech) |
-| Front-end | React |
-| Testes | JUnit (Spring Boot Test) |
+- frontend: JavaScript, React
+- backend: Java 21,  Spring 4.1.2 , Maven, Spring Data JPA, Spring Security, Spring Web
+- banco de dados: PostgreSQL hospedado no [Neon](https://neon.tech)
+- testes: JUnit (Spring Boot Test)
 
 ---
 
@@ -131,11 +126,15 @@ Este projeto está organizado nas pastas descritas abaixo:
 
 ### Estrutura de Pastas
 
+*Reflete o projeto Spring dentro de ´´´bash backend/```*
+
 *   *src/main/java/com/arenahub/arenahub/*: Código-fonte principal da aplicação.
     *   *controller/*: Recebem as requisições e devolvem as respostas (telas/API).
     *   *service/*: Regras de negócio (ex.: validação de conflito de horários).
     *   *repository/*: Acesso ao banco de dados (Spring Data JPA).
     *   *model/*: Entidades do sistema (ex.: Quadra, Aula, Usuário).
+    *   *dto/*: Objetos de transferencia de dados (ex: AulaResponseDto, UsuarioRequstDto)
+        
 *   *src/main/resources/*: Recursos da aplicação.
     *   *application.properties*: Configurações (banco, porta etc.).
     *   *templates/*: Páginas HTML (Thymeleaf), se aplicável.
