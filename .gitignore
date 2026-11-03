@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Variáveis de ambiente locais do projeto Spring
+/backend/.env
+
 ### STS ###
 .apt_generated
 .classpath
