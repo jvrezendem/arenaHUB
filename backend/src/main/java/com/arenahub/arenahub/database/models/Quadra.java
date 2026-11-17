@@ -3,6 +3,8 @@ package com.arenahub.arenahub.database.models;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -37,7 +39,8 @@ public class Quadra {
 
     private boolean ativa;
 
-    @Column(name = "criada_em")
+    @Column(name = "criada_em", updatable = false)
+    @CreationTimestamp 
     private LocalDateTime criadaEm;
 
 }

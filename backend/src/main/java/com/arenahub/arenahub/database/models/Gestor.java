@@ -2,6 +2,8 @@ package com.arenahub.arenahub.database.models;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,6 +36,7 @@ public class Gestor {
     @Column(name = "senha_hash")
     private String senhaHash;
 
-    @Column(name = "criado_em")
+    @Column(name = "criado_em", updatable = false)
+    @CreationTimestamp
     private LocalDateTime criadoEm;
 }
