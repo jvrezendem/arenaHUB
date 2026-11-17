@@ -45,10 +45,10 @@ public class Cliente {
     @CreationTimestamp
     private LocalTime criadoEm;
 
-    @OneToMany(mappedBy = "reserva")
+    @OneToMany(mappedBy = "idCliente")
     private Set<Reserva> reservas;
 
-    @OneToMany(mappedBy = "movimentacao_credito")
+    @OneToMany(mappedBy = "idCliente")
     private Set<MovimentacaoCredito> movimentacoes;
 
 }

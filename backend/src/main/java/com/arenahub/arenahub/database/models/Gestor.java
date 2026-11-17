@@ -44,9 +44,9 @@ public class Gestor {
     @CreationTimestamp
     private LocalDateTime criadoEm;
 
-    @OneToMany(mappedBy = "reserva")
+    @OneToMany(mappedBy = "idGestor")
     private Set<Reserva> reservas;
 
-    @OneToMany(mappedBy = "movimentacao_credito")
+    @OneToMany(mappedBy = "idGestor")
     private Set<MovimentacaoCredito> movimentacoes;
 }

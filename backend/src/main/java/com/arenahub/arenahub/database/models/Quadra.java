@@ -47,6 +47,6 @@ public class Quadra {
     @CreationTimestamp
     private LocalDateTime criadaEm;
 
-    @OneToMany(mappedBy = "reserva")
+    @OneToMany(mappedBy = "idQuadra")
     private Set<Reserva> reservas;
 }
