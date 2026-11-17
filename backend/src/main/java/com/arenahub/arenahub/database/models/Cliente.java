@@ -1,6 +1,7 @@
 package com.arenahub.arenahub.database.models;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -11,6 +12,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,6 +35,7 @@ public class Cliente {
 
     private String nome;
 
+    @Column(nullable = false)
     private TipoCliente tipo;
 
     @Column(name = "saldo_creditos")
@@ -41,5 +44,11 @@ public class Cliente {
     @Column(name = "criado_em", updatable = false)
     @CreationTimestamp
     private LocalTime criadoEm;
+
+    @OneToMany(mappedBy = "reserva")
+    private Set<Reserva> reservas;
+
+    @OneToMany(mappedBy = "movimentacao_credito")
+    private Set<MovimentacaoCredito> movimentacoes;
 
 }

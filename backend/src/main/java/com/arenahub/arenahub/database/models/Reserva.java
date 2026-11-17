@@ -14,7 +14,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,15 +36,15 @@ public class Reserva {
     @Column(name = "id_reserva")
     private long idReserva;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_quadra", nullable = false)
     private Quadra idQuadra;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente idCliente;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "id_gestor", nullable = false)
     private Gestor idGestor;
 
@@ -56,6 +56,7 @@ public class Reserva {
     @Column(name = "hora_fim")
     private LocalTime horaFim;
 
+    @Column(nullable = false)
     private StatusReserva situacao;
 
     @Column(name = "criada_em", updatable = false)

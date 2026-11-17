@@ -2,6 +2,7 @@ package com.arenahub.arenahub.database.models;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Set;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -10,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,4 +47,6 @@ public class Quadra {
     @CreationTimestamp
     private LocalDateTime criadaEm;
 
+    @OneToMany(mappedBy = "reserva")
+    private Set<Reserva> reservas;
 }
