@@ -17,6 +17,7 @@ import com.arenahub.arenahub.database.repository.IGestorRepository;
 import com.arenahub.arenahub.dto.request.LoginRequestDto;
 import com.arenahub.arenahub.dto.request.RegisterRequestDto;
 import com.arenahub.arenahub.dto.response.LoginResponseDto;
+import com.arenahub.arenahub.exception.EmailJaCadastradoException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +38,7 @@ public class AuthenticationService {
         Gestor gestor = gestorRepository.findByEmail(requestDto.email());
 
         if (gestor != null) {
-            throw new RuntimeException("Email já cadastrado");
+            throw new EmailJaCadastradoException(requestDto.email());
         }
 
         gestorRepository.save(

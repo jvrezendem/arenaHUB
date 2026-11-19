@@ -23,4 +23,17 @@ public class GlobalExceptionHandler {
                 e.getMessage()
             ), status);
     }
+
+    @ExceptionHandler(EmailJaCadastradoException.class)
+    public ResponseEntity<ErrorResponseDto> handleEmailJaCadastrado(EmailJaCadastradoException e){
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        return new ResponseEntity<>(
+            new ErrorResponseDto(
+                LocalDateTime.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                e.getMessage()
+            ), status);
+    }
 }
