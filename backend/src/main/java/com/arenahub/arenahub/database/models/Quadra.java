@@ -33,17 +33,18 @@ public class Quadra {
     @Column(name = "id_quadra")
     private long idQuadra;
 
+    @Column(nullable = false, unique = true)
     private String nome;
 
-    @Column(name = "hora_abertura")
+    @Column(name = "hora_abertura", nullable = false)
     private LocalTime horaAbertura;
 
-    @Column(name = "hora_fechamento")
+    @Column(name = "hora_fechamento", nullable = false)
     private LocalTime horaFechamento;
 
     private boolean ativa;
 
-    @Column(name = "criada_em", updatable = false)
+    @Column(name = "criada_em", updatable = false, nullable = false)
     @CreationTimestamp
     private LocalDateTime criadaEm;
 
