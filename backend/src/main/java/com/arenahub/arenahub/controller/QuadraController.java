@@ -17,6 +17,7 @@ import com.arenahub.arenahub.dto.QuadraDto;
 import com.arenahub.arenahub.dto.QuadraUpdateDto;
 import com.arenahub.arenahub.service.QuadraService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -42,13 +43,13 @@ public class QuadraController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createQuadra(@RequestBody QuadraDto quadraDto) {
+    public ResponseEntity<String> createQuadra(@RequestBody @Valid QuadraDto quadraDto) {
         quadraService.createQuadra(quadraDto);
         return new ResponseEntity<>("Quadra criada com sucesso!", HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateQuadra(@PathVariable long id, @RequestBody QuadraUpdateDto quadraDto) {
+    public ResponseEntity<String> updateQuadra(@PathVariable long id, @RequestBody @Valid QuadraUpdateDto quadraDto) {
         quadraService.updateQuadra(quadraDto, id);
         return new ResponseEntity<>("Quadra atualizada com sucesso!", HttpStatus.OK);
     }
