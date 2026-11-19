@@ -41,7 +41,7 @@ public class QuadraService {
         Quadra quadra = quadraRepository.findByNome(quadraDto.nome()).orElse(null);
 
         if (quadra != null) {
-            throw new RuntimeException("Quadra com esse nome já existe!");
+            throw new QuadraNaoEncontradaException(quadraDto.nome());
         }
 
         quadraRepository.save(
