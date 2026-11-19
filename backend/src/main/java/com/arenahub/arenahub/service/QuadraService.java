@@ -43,7 +43,7 @@ public class QuadraService {
 
         if (quadra != null) {
             throw new QuadraJaExisteException();
-
+        }
         quadraRepository.save(
                 Quadra.builder()
                         .nome(quadraDto.nome())
