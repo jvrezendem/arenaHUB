@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.arenahub.arenahub.database.models.Gestor;
 import com.arenahub.arenahub.database.repository.IGestorRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -16,12 +17,13 @@ public class UserDetailsServiceImp implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            return gestorRepository.findByEmail(username);
-        } catch (Exception e) {
-            throw new UsernameNotFoundException("Usuário não encontrado");
-        }
+        Gestor gestor = gestorRepository.findByEmail(username);
 
+       if(gestor == null){
+        throw new UsernameNotFoundException("Usuário não encontrado");
+       }
+
+       return gestor;
     }
 
 }
