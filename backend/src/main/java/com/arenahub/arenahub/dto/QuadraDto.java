@@ -9,13 +9,13 @@ import jakarta.validation.constraints.NotNull;
 
 public record QuadraDto(
 
-        @NotBlank(message = "O nome é necessário") String nome,
+                @NotBlank(message = "O nome é necessário") String nome,
 
-        @NotNull(message = "A hora de abertura é necessária") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm") LocalTime horaAbertura,
+                @NotNull(message = "A hora de abertura é necessária") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm") LocalTime horaAbertura,
 
-        @NotNull(message = "A hora de fechamento é necessária") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm") LocalTime horaFechamento,
+                @NotNull(message = "A hora de fechamento é necessária") @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm") LocalTime horaFechamento,
 
-        @NotNull(message = "O status é necessário") boolean ativa
+                @NotNull(message = "O status é necessário") boolean ativa
 
 ) {
 
