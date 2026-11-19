@@ -9,6 +9,7 @@ import com.arenahub.arenahub.database.models.Quadra;
 import com.arenahub.arenahub.database.repository.IQuadraRepository;
 import com.arenahub.arenahub.dto.QuadraDto;
 import com.arenahub.arenahub.dto.QuadraUpdateDto;
+import com.arenahub.arenahub.exception.QuadraNaoEncontradaException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,13 +27,13 @@ public class QuadraService {
 
     public QuadraDto getQuadraById(long id) {
         return quadraRepository.findById(id).map(this::toDto)
-                .orElseThrow(() -> new RuntimeException("Quadra não encontrada!" + id));
+                .orElseThrow(() -> new QuadraNaoEncontradaException(id));
 
     }
 
     public QuadraDto getQuadraByNome(String nome) {
         return quadraRepository.findByNome(nome).map(this::toDto)
-                .orElseThrow(() -> new RuntimeException("Quadra não encontrada!" + nome));
+                .orElseThrow(() -> new QuadraNaoEncontradaException(nome));
     }
 
     public void createQuadra(QuadraDto quadraDto) {
@@ -54,7 +55,7 @@ public class QuadraService {
     }
 
     public void updateQuadra(QuadraUpdateDto quadraDto, long id) {
-        Quadra quadra = quadraRepository.findById(id).orElseThrow();
+        Quadra quadra = quadraRepository.findById(id).orElseThrow(() -> new QuadraNaoEncontradaException(id));
 
         if (quadraDto.nome() != null)
             quadra.setNome(quadraDto.nome());
@@ -69,7 +70,7 @@ public class QuadraService {
     }
 
     public void deleteQuadra(long id) {
-        Quadra quadra = quadraRepository.findById(id).orElseThrow(() -> new RuntimeException());
+        Quadra quadra = quadraRepository.findById(id).orElseThrow(() -> new QuadraNaoEncontradaException(id));
         quadraRepository.deleteById(quadra.getIdQuadra());
     }
 
