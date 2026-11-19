@@ -36,4 +36,17 @@ public class GlobalExceptionHandler {
                 e.getMessage()
             ), status);
     }
+
+    @ExceptionHandler(QuadraJaExisteException.class)
+    public ResponseEntity<ErrorResponseDto> handleQuadraJaExiste(QuadraJaExisteException e){
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        return new ResponseEntity<>(
+            new ErrorResponseDto(
+                LocalDateTime.now(), 
+                status.value(), 
+                status.getReasonPhrase(),
+                e.getMessage()
+            ), status);
+    }
 }
