@@ -9,6 +9,7 @@ import com.arenahub.arenahub.database.models.Quadra;
 import com.arenahub.arenahub.database.repository.IQuadraRepository;
 import com.arenahub.arenahub.dto.QuadraDto;
 import com.arenahub.arenahub.dto.QuadraUpdateDto;
+import com.arenahub.arenahub.exception.QuadraJaExisteException;
 import com.arenahub.arenahub.exception.QuadraNaoEncontradaException;
 
 import lombok.RequiredArgsConstructor;
@@ -41,8 +42,7 @@ public class QuadraService {
         Quadra quadra = quadraRepository.findByNome(quadraDto.nome()).orElse(null);
 
         if (quadra != null) {
-            throw new QuadraNaoEncontradaException(quadraDto.nome());
-        }
+            throw new QuadraJaExisteException();
 
         quadraRepository.save(
                 Quadra.builder()

@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
                 LocalDateTime.now(), 
                 status.value(), 
                 status.getReasonPhrase(),
-                e.getMessage()
+                "Credenciais Inválidas"
             ), status);
     }
 }
