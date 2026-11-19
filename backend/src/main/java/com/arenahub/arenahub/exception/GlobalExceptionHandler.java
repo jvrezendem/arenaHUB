@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -40,6 +41,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(QuadraJaExisteException.class)
     public ResponseEntity<ErrorResponseDto> handleQuadraJaExiste(QuadraJaExisteException e){
         HttpStatus status = HttpStatus.CONFLICT;
+
+        return new ResponseEntity<>(
+            new ErrorResponseDto(
+                LocalDateTime.now(), 
+                status.value(), 
+                status.getReasonPhrase(),
+                e.getMessage()
+            ), status);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponseDto> handleBadCredentials(BadCredentialsException e){
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
 
         return new ResponseEntity<>(
             new ErrorResponseDto(

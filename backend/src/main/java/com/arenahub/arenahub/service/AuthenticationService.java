@@ -52,16 +52,10 @@ public class AuthenticationService {
     }
 
     public LoginResponseDto loginGestor(LoginRequestDto requestDto) {
-        try {
-            Authentication auth = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(requestDto.email(), requestDto.senha()));
-            String token = tokenProvider.generateToken(auth);
+        Authentication auth = authenticationManager
+                            .authenticate(new UsernamePasswordAuthenticationToken(requestDto.email(), requestDto.senha()));
+        String token = tokenProvider.generateToken(auth);
 
-            return new LoginResponseDto(token, expiration);
-        } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Credenciais inválidas");
-        } catch (Exception e) {
-            throw new RuntimeException("Erro ao autenticar usuário", e);
-        }
+        return new LoginResponseDto(token, expiration);
     }
 }
