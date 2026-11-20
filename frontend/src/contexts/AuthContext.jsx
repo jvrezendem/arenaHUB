@@ -1,6 +1,7 @@
 // src/contexts/AuthContext.jsx
 import { createContext, useContext, useState, useEffect } from 'react'
-import { api } from '../api/client'
+import { api, endpoints } from '../api/client'
+import { getEmailFromToken, isTokenExpired } from '../utils/jwt'
 
 const AuthContext = createContext(null)
 
@@ -9,14 +10,33 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const stored = localStorage.getItem('user')
-        if (stored) setUser(JSON.parse(stored))
+        const token = localStorage.getItem('token')
+        const storedUser = localStorage.getItem('user')
+
+        if (token && storedUser) {
+
+            if (isTokenExpired(token)) {
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
+            } else {
+                setUser(JSON.parse(storedUser))
+            }
+        }
         setLoading(false)
     }, [])
 
     const login = async (email, senha) => {
-        const res = await api.post('/auth/login', { email, senha })
-        const { token, usuario } = res.data
+        const res = await api.post(endpoints.login, { email, senha })
+        const { token, expiration } = res.data
+
+        const tokenEmail = getEmailFromToken(token)
+
+        const usuario = {
+            email: tokenEmail || email,
+            nome: tokenEmail?.split('@')[0] || 'Usuário',
+            token,
+        }
+
         localStorage.setItem('token', token)
         localStorage.setItem('user', JSON.stringify(usuario))
         setUser(usuario)
@@ -28,7 +48,7 @@ export function AuthProvider({ children }) {
         setUser(null)
     }
 
-    if (loading) return null // ou <LoadingSpinner />
+    if (loading) return null  // ou <LoadingSpinner />
 
     return (
         <AuthContext.Provider value={{ user, isAuthenticated: !!user, login, logout }}>
