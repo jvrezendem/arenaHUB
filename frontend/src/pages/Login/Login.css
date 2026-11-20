@@ -1,0 +1,190 @@
+.login-container {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #f4f5f7;
+}
+
+/* Painel esquerdo */
+
+.login-brand {
+    background: #123c3a;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    color: white;
+}
+
+.brand-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.brand-content h1 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: white;
+}
+
+.brand-content h1 span {
+    color: #f28c28;
+}
+
+.brand-content p {
+    font-size: 1.1rem;
+    color: #d1e0dc;
+    margin-top: 12px;
+}
+
+/* Elementos decorativos */
+
+.brand-decoration {
+    position: absolute;
+    border-radius: 50%;
+    background: #f28c28;
+    opacity: 0.15;
+}
+
+.brand-circle-one {
+    width: 350px;
+    height: 350px;
+    top: -100px;
+    left: -100px;
+}
+
+.brand-circle-two {
+    width: 450px;
+    height: 450px;
+    bottom: -200px;
+    right: -150px;
+}
+
+/* Painel direito */
+
+.login-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+/* Card do formulário */
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    background: white !important;
+    border: none !important;
+    border-radius: 14px !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+    color: #1f2937 !important;
+}
+
+.login-title {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #123c3a;
+    text-align: center;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #6b7280;
+    margin-bottom: 12px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.login-button {
+    width: 100%;
+    background: #f28c28 !important;
+    color: white !important;
+}
+
+.login-button:hover {
+    background: #dc7617 !important;
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+    .login-container {
+        grid-template-columns: 1fr;
+    }
+
+    .login-brand {
+        min-height: 220px;
+    }
+
+    .brand-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .login-content {
+        padding: 30px 20px;
+    }
+}
+
+
+/* Ajustes dos campos do Flowbite */
+
+.login-card label {
+    color: #374151 !important;
+    font-weight: 600;
+}
+
+.login-card input {
+    background-color: #ffffff !important;
+    color: #1f2937 !important;
+    border-color: #d1d5db !important;
+    color-scheme: light;
+}
+
+.login-card input::placeholder {
+    color: #9ca3af !important;
+}
+
+.login-card input:focus {
+    border-color: #f28c28 !important;
+    box-shadow: 0 0 0 2px rgba(242, 140, 40, 0.2) !important;
+    outline: none;
+}
+
+
+.password-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input-wrapper input {
+    padding-right: 85px !important;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: #123c3a;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.password-toggle:hover {
+    color: #f28c28;
+}
