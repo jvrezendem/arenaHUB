@@ -5,7 +5,7 @@
 **Disciplina:** Engenharia de Software
 **Instituição:** Universidade Federal de Lavras - UFLA
 **Semestre:** 2026-2
-**Status:** Sprint 0 — Preparação do Ambiente
+**Status:** Sprint 2 — Projeto e Implementação (em andamento)
 
 **Equipe:**
 * Felipe Colaço Emmendoerfer — Product Owner (PO)
@@ -70,7 +70,7 @@ O Arena Hub é um sistema web em que o próprio usuário consulta a disponibilid
 * **`java` não é reconhecido:** instale o Java 21 e reabra o terminal.
 * **`npm` não é reconhecido:** instale o Node.js e reabra o terminal.
 * **Erro de conexão com o banco:** confira se o `.env` está na pasta `backend/` e se há internet.
-* **Porta 8080 já em uso:** adicione `server.port=8081` ao `backend/src/main/resources/application.properties` e ajuste a URL da API no frontend.
+* **Porta 8080 já em uso:** adicione `server.port=8081` ao `backend/src/main/resources/application.properties` e ajuste o `target` do proxy em `frontend/vite.config.js` para a mesma porta.
 
 ---
 
@@ -92,13 +92,19 @@ Siga os passos abaixo para preparar o ambiente e se tornar dev do projeto.
    DB_URL=jdbc:postgresql://<host>.neon.tech/<banco>?sslmode=require
    DB_USER=<usuario>
    DB_PASSWORD=<senha>
+   JWT_KEY=<chave secreta com pelo menos 32 caracteres>
+   JWT_EXPIRATION=86400000
    ```
-   O `backend/src/main/resources/application.properties` lê essas variáveis:
+   `JWT_KEY` é a chave usada para assinar os tokens de login e `JWT_EXPIRATION` é a validade do token em milissegundos (86400000 = 24h).
+
+   O `backend/src/main/resources/application.properties` lê essas variáveis (o `.env` é encontrado tanto rodando da raiz do projeto quanto de dentro de `backend/`):
    ```properties
-   spring.config.import=optional:file:.env[.properties]
+   spring.config.import=optional:file:./backend/.env[.properties],optional:file:./.env[.properties]
    spring.datasource.url=${DB_URL}
    spring.datasource.username=${DB_USER}
    spring.datasource.password=${DB_PASSWORD}
+   jwt.key=${JWT_KEY}
+   jwt.expiration=${JWT_EXPIRATION}
    ```
 3. **Instale as dependências:**
    ```bash
@@ -139,8 +145,11 @@ cd backend && ./mvnw test
 - **outras:**
   - Lombok — reduz código repetitivo (getters, setters, construtores) nas classes Java.
   - Driver JDBC do PostgreSQL — conexão do backend com o banco.
-  - Git e GitHub — controle de versão, Kanban e releases.
+  - Git e GitHub — controle de versão e releases.
+  - Trello — backlog do produto e quadro Kanban das sprints.
   - Figma — prototipação das interfaces.
+  - Vercel — hospedagem do frontend (build do Vite publicado a cada push).
+  - Render — hospedagem do backend (Web Service com Docker e Java 21).
   - Astah UML  — diagramas de casos de uso, classes, sequência e implantação.
   - Visual Studio Code  — editor de código (IDE) usado no desenvolvimento do backend e do frontend.
 
@@ -185,13 +194,14 @@ arenahub/
 
 ## 6. Gestão do Projeto
 
-* **Backlog e Kanban:** <a criar na Sprint 1>
-* **Protótipo de interfaces (Figma):** <a criar na Sprint 1>
+* **Backlog e Kanban:** [quadro no Trello](https://trello.com/b/qX3CujEw/arenahub-kanban-do-projeto-final)
+* **Protótipo de interfaces (Figma):** [ArenaHub no Figma](https://www.figma.com/design/1a8orEsl0C3b1zXw4HmNEc)
+* **Hospedagem:** frontend na [Vercel](https://vercel.com), backend no [Render](https://render.com) e banco no [Neon](https://neon.tech).
 * **Releases:** veja a aba [Releases](https://github.com/jvrezendem/arenaHUB/releases) (baselines do projeto).
 
 | Sprint | Foco | Situação |
 |--------|------|----------|
-| 0 | Preparação do ambiente | Em andamento |
-| 1 | Especificação do produto (requisitos, casos de uso, protótipo) | Planejada |
-| 2 | Projeto e implementação | Planejada |
+| 0 | Preparação do ambiente | Finalizada |
+| 1 | Especificação do produto (requisitos, casos de uso, protótipo) | Finalizada |
+| 2 | Projeto e implementação | Em andamento |
 | 3 | Implementação e testes | Planejada |
