@@ -2,6 +2,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Login from './pages/Login/Login';
+import CriarContaGestor from './pages/CriarContaGestor/CriarContaGestor';
 
 function PrivateRoute({ children }) {
   const { isAuthenticated } = useAuth();
@@ -15,6 +16,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/primeiro-acesso" element={<CriarContaGestor />} />
 
       <Route
         path="/"
