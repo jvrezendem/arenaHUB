@@ -1,116 +1,108 @@
+import { useState } from 'react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import AuthShell from '../../components/AuthShell'
+import Field from '../../components/Field'
+import { InfoIcon } from '../../components/icons'
+import { useAuth } from '../../contexts/AuthContext'
 
-import { useState } from 'react';
-import { Card, Label, TextInput, Button, Alert } from 'flowbite-react';
-import { useAuth } from '../../contexts/AuthContext';
-import './Login.css';
+function validar({ email, senha }) {
+    const erros = {}
+    if (!email.trim()) erros.email = 'Informe o e-mail para entrar.'
+    if (!senha) erros.senha = 'Informe a senha para entrar.'
+    return erros
+}
 
-function Login() {
-    const { login } = useAuth();
+export default function Login() {
+    const { login } = useAuth()
+    const navigate = useNavigate()
+    const location = useLocation()
 
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
-    const [erro, setErro] = useState('');
-    const [carregando, setCarregando] = useState(false);
-    const [senhaVisivel, setSenhaVisivel] = useState(false);
+    const [email, setEmail] = useState('')
+    const [senha, setSenha] = useState('')
+    const [erros, setErros] = useState({})
+    const [erroGeral, setErroGeral] = useState('')
+    const [carregando, setCarregando] = useState(false)
+
+    const contaCriada = location.state?.contaCriada === true
 
     async function handleSubmit(event) {
-        event.preventDefault();
-        setErro('');
-        setCarregando(true);
+        event.preventDefault()
+        setErroGeral('')
 
+        const novosErros = validar({ email, senha })
+        setErros(novosErros)
+        if (Object.keys(novosErros).length > 0) return
+
+        setCarregando(true)
         try {
-            await login(email, senha);
+            await login(email.trim(), senha)
+            navigate('/', { replace: true })
         } catch (error) {
-            setErro(
-                error.response?.data?.message ||
-                'Não foi possível realizar o login. Verifique suas credenciais.'
-            );
+            setErroGeral(
+                error.response?.status === 401
+                    ? 'E-mail ou senha incorretos.'
+                    : 'Não foi possível entrar agora. Tente novamente.'
+            )
         } finally {
-            setCarregando(false);
+            setCarregando(false)
         }
     }
 
     return (
-        <main className="login-container">
+        <AuthShell>
+            <h1 className="auth-title" style={{ marginBottom: 16 }}>Entrar</h1>
 
-            <section className="login-brand">
-                <div className="brand-decoration brand-circle-one"></div>
-                <div className="brand-decoration brand-circle-two"></div>
-
-                <div className="brand-content">
-                    <h1>Arena<span>HUB</span></h1>
-                    <p>Seu espaço para jogar, conectar e competir.</p>
+            {contaCriada && (
+                <div className="notice notice--success" role="status">
+                    <InfoIcon />
+                    Conta criada com sucesso. Entre para continuar.
                 </div>
-            </section>
+            )}
 
-            <section className="login-content">
-                <Card className="login-card">
+            {erroGeral && (
+                <div className="notice notice--error" role="alert">
+                    <InfoIcon />
+                    {erroGeral}
+                </div>
+            )}
 
-                    <h2 className="login-title">Bem-vindo ao ArenaHUB</h2>
+            <form className="auth-form" onSubmit={handleSubmit} noValidate>
+                <Field
+                    id="email"
+                    label="E-mail"
+                    type="email"
+                    autoComplete="username"
+                    placeholder="Digite seu e-mail"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    error={erros.email}
+                />
 
-                    <p className="login-subtitle">
-                        Entre na sua conta para continuar.
-                    </p>
+                <Field
+                    id="senha"
+                    label="Senha"
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="Digite sua senha"
+                    value={senha}
+                    onChange={(e) => setSenha(e.target.value)}
+                    error={erros.senha}
+                />
 
-                    {erro && (
-                        <Alert color="failure">
-                            {erro}
-                        </Alert>
-                    )}
+                <div className="auth-actions">
+                    <button type="submit" className="btn btn--primary" disabled={carregando}>
+                        {carregando ? 'Entrando...' : 'Entrar'}
+                    </button>
+                </div>
+            </form>
 
-                    <form onSubmit={handleSubmit} className="login-form">
-
-                        <div>
-                            <Label htmlFor="email">E-mail</Label>
-                            <TextInput
-                                id="email"
-                                type="email"
-                                placeholder="seu@email.com"
-                                value={email}
-                                onChange={(event) => setEmail(event.target.value)}
-                                required
-                            />
-                        </div>
-
-
-                        <div className="password-field">
-                            <Label htmlFor="senha">Senha</Label>
-
-                            <div className="password-input-wrapper">
-                                <TextInput
-                                    id="senha"
-                                    type={senhaVisivel ? 'text' : 'password'}
-                                    placeholder="Digite sua senha"
-                                    value={senha}
-                                    onChange={(event) => setSenha(event.target.value)}
-                                    required
-                                />
-
-                                <button
-                                    type="button"
-                                    className="password-toggle"
-                                    onClick={() => setSenhaVisivel(!senhaVisivel)}
-                                >
-                                    {senhaVisivel ? 'Ocultar' : 'Mostrar'}
-                                </button>
-                            </div>
-                        </div>
-
-
-                        <Button
-                            type="submit"
-                            disabled={carregando}
-                            className="login-button"
-                        >
-                            {carregando ? 'Entrando...' : 'Entrar'}
-                        </Button>
-
-                    </form>
-                </Card>
-            </section>
-
-        </main>
-    );
+            <p className="auth-switch">
+                Primeiro acesso?{' '}
+                <Link to="/primeiro-acesso" className="auth-link">Criar conta</Link>
+            </p>
+            <p className="auth-note">
+                Versão de teste: use o e-mail e a senha informados pelo facilitador.
+            </p>
+        </AuthShell>
+    )
 }
-
-export default Login;
