@@ -16,14 +16,12 @@ export const endpoints = {
     deleteQuadra: (id) => `/quadra/delete/${id}`,
 }
 
-// Interceptor: Token JWT
 api.interceptors.request.use((config) => {
     const token = localStorage.getItem('token')
     if (token) config.headers.Authorization = `Bearer ${token}`
     return config
 })
 
-// 401 → logout
 api.interceptors.response.use(
     (res) => res,
     (error) => {
