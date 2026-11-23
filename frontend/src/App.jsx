@@ -1,43 +1,43 @@
-
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import Login from './pages/Login/Login';
-import CriarContaGestor from './pages/CriarContaGestor/CriarContaGestor';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthProvider'
+import { useAuth } from './contexts/useAuth'
+import Login from './pages/Login/Login'
+import CriarContaGestor from './pages/CriarContaGestor/CriarContaGestor'
 
 function PrivateRoute({ children }) {
-  const { isAuthenticated } = useAuth();
+    const { isAuthenticated } = useAuth()
 
-  return isAuthenticated
-    ? children
-    : <Navigate to="/login" replace />;
+    return isAuthenticated
+        ? children
+        : <Navigate to="/login" replace />
 }
 
 function AppRoutes() {
-  return (
-    <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/primeiro-acesso" element={<CriarContaGestor />} />
+    return (
+        <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/primeiro-acesso" element={<CriarContaGestor />} />
 
-      <Route
-        path="/"
-        element={
-          <PrivateRoute>
-            <h1>Bem-vindo ao ArenaHUB!</h1>
-          </PrivateRoute>
-        }
-      />
+            <Route
+                path="/"
+                element={
+                    <PrivateRoute>
+                        <h1>Bem-vindo ao ArenaHUB!</h1>
+                    </PrivateRoute>
+                }
+            />
 
-      <Route path="*" element={<Navigate to="/login" replace />} />
-    </Routes>
-  );
+            <Route path="*" element={<Navigate to="/login" replace />} />
+        </Routes>
+    )
 }
 
 export default function App() {
-  return (
-    <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <AuthProvider>
+                <AppRoutes />
+            </AuthProvider>
+        </BrowserRouter>
+    )
 }

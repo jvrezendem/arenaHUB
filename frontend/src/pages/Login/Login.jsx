@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import AuthShell from '../../components/AuthShell'
 import Field from '../../components/Field'
 import { InfoIcon } from '../../components/icons'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from '../../contexts/useAuth'
 
 function validar({ email, senha }) {
     const erros = {}
