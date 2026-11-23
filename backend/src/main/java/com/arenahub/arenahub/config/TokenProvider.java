@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -22,7 +23,6 @@ public class TokenProvider {
     @Value("${jwt.key}")
     private String key;
 
-    // gerar o token
     public String generateToken(Authentication authentication) {
 
         UserDetails user = (UserDetails) authentication.getPrincipal();
@@ -45,26 +45,22 @@ public class TokenProvider {
         return Keys.hmacShaKeyFor(key.getBytes());
     }
 
-    // validar o token
     public boolean isTokenValid(String token) {
         try {
             getClaims(token);
             return true;
-        } catch (Exception e) {
+        } catch (JwtException | IllegalArgumentException e) {
             return false;
         }
     }
 
     private Claims getClaims(String token) {
-        // validar a assinatura do token
-        // validar a expiração do token
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()
                 .parseSignedClaims(token)
                 .getPayload();
     }
-    // extrair informações do token
 
     public String getUsernameFromToken(String token) {
         Claims claims = getClaims(token);
