@@ -2,8 +2,33 @@
 @import "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
-
 :root {
-  --color-primary: #aa3bff;
-  --color-primary-hover: #9333ea;
+  --font: 'Outfit', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --teal-700: #035560;
+  --teal-900: #002f36;
+  --ink: #08404a;
+  --ink-soft: #2b4043;
+
+  --brand: #ca3f16;
+  --brand-hover: #b23812;
+  --orange: #f3810a;
+  --orange-strong: #cd4414;
+  --orange-dot: #ff9408;
+
+  --error: #95122c;
+  --error-bg: #fbe5e9;
+  --success-bg: #ddefea;
+  --notice-bg: #ffe9d6;
+
+  --bg: #f3f4f5;
+  --line: #c2cdce;
+  --warm: #ffe3c7;
+  --cool: #d9eaea;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: var(--font);
 }
