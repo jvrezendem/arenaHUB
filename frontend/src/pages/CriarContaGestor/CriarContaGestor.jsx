@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { api, endpoints } from '../../api/client'
 import AuthShell from '../../components/AuthShell'
 import Field from '../../components/Field'
 import { ArrowLeftIcon, InfoIcon } from '../../components/icons'
+import { useAuth } from '../../contexts/AuthContext'
+import { useGestorExiste } from '../../hooks/useGestorExiste'
 
 const SENHA_FORTE = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).+$/
 const EMAIL_VALIDO = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -32,6 +34,8 @@ function validar({ nome, email, senha, confirmacao }) {
 
 export default function CriarContaGestor() {
     const navigate = useNavigate()
+    const { login } = useAuth()
+    const gestorExiste = useGestorExiste()
 
     const [form, setForm] = useState({ nome: '', email: '', senha: '', confirmacao: '' })
     const [erros, setErros] = useState({})
@@ -56,7 +60,13 @@ export default function CriarContaGestor() {
                 email: form.email.trim(),
                 senha: form.senha,
             })
-            navigate('/login', { replace: true, state: { contaCriada: true } })
+
+            try {
+                await login(form.email.trim(), form.senha)
+                navigate('/', { replace: true })
+            } catch {
+                navigate('/login', { replace: true, state: { contaCriada: true } })
+            }
         } catch (error) {
             const status = error.response?.status
 
@@ -73,6 +83,8 @@ export default function CriarContaGestor() {
             setCarregando(false)
         }
     }
+
+    if (gestorExiste) return <Navigate to="/login" replace />
 
     return (
         <AuthShell variant="form">

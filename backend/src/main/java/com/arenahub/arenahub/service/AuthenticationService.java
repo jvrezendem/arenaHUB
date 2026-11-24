@@ -33,9 +33,13 @@ public class AuthenticationService {
     @Value("${jwt.expiration}")
     private long expiration;
 
+    public boolean existeGestor() {
+        return gestorRepository.count() > 0;
+    }
+
     public void registerGestor(RegisterRequestDto requestDto) {
 
-        if (gestorRepository.count() > 0) {
+        if (existeGestor()) {
             throw new GestorJaCadastradoException();
         }
 

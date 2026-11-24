@@ -2,6 +2,7 @@ package com.arenahub.arenahub.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.arenahub.arenahub.dto.request.LoginRequestDto;
 import com.arenahub.arenahub.dto.request.RegisterRequestDto;
+import com.arenahub.arenahub.dto.response.GestorExisteResponseDto;
 import com.arenahub.arenahub.dto.response.LoginResponseDto;
 import com.arenahub.arenahub.service.AuthenticationService;
 
@@ -26,6 +28,11 @@ public class AuthenticationController {
     public ResponseEntity<String> registerGestor(@RequestBody @Valid RegisterRequestDto registerRequestDto) {
         authenticationService.registerGestor(registerRequestDto);
         return new ResponseEntity<>("Gestor cadastrado com sucesso!", HttpStatus.OK);
+    }
+
+    @GetMapping("gestorExiste")
+    public ResponseEntity<GestorExisteResponseDto> gestorExiste() {
+        return new ResponseEntity<>(new GestorExisteResponseDto(authenticationService.existeGestor()), HttpStatus.OK);
     }
 
     @PostMapping("loginG")

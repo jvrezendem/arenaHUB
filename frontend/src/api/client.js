@@ -8,6 +8,7 @@ export const api = axios.create({
 export const endpoints = {
     login: '/auth/loginG',
     register: '/auth/registerG',
+    gestorExiste: '/auth/gestorExiste',
     quadras: '/quadra/getAll',
     quadraById: (id) => `/quadra/getById/${id}`,
     quadraByNome: (nome) => `/quadra/getByNome/${nome}`,

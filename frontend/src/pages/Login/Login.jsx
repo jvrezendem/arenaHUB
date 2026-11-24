@@ -4,6 +4,7 @@ import AuthShell from '../../components/AuthShell'
 import Field from '../../components/Field'
 import { InfoIcon } from '../../components/icons'
 import { useAuth } from '../../contexts/AuthContext'
+import { useGestorExiste } from '../../hooks/useGestorExiste'
 
 function validar({ email, senha }) {
     const erros = {}
@@ -14,6 +15,7 @@ function validar({ email, senha }) {
 
 export default function Login() {
     const { login } = useAuth()
+    const gestorExiste = useGestorExiste()
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -96,10 +98,12 @@ export default function Login() {
                 </div>
             </form>
 
-            <p className="auth-switch">
-                Primeiro acesso?{' '}
-                <Link to="/primeiro-acesso" className="auth-link">Criar conta</Link>
-            </p>
+            {!gestorExiste && (
+                <p className="auth-switch">
+                    Primeiro acesso?{' '}
+                    <Link to="/primeiro-acesso" className="auth-link">Criar conta</Link>
+                </p>
+            )}
             <p className="auth-note">
                 Versão de teste: use o e-mail e a senha informados pelo facilitador.
             </p>
