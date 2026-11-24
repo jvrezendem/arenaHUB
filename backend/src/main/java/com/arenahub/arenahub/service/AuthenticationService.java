@@ -17,6 +17,7 @@ import com.arenahub.arenahub.dto.request.LoginRequestDto;
 import com.arenahub.arenahub.dto.request.RegisterRequestDto;
 import com.arenahub.arenahub.dto.response.LoginResponseDto;
 import com.arenahub.arenahub.exception.EmailJaCadastradoException;
+import com.arenahub.arenahub.exception.GestorJaCadastradoException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -33,6 +34,10 @@ public class AuthenticationService {
     private long expiration;
 
     public void registerGestor(RegisterRequestDto requestDto) {
+
+        if (gestorRepository.count() > 0) {
+            throw new GestorJaCadastradoException();
+        }
 
         Gestor gestor = gestorRepository.findByEmail(requestDto.email());
 

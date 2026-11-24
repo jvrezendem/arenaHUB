@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.arenahub.arenahub.dto.response.ErrorResponseDto;
 import com.arenahub.arenahub.exception.EmailJaCadastradoException;
+import com.arenahub.arenahub.exception.GestorJaCadastradoException;
 import com.arenahub.arenahub.exception.QuadraJaExisteException;
 import com.arenahub.arenahub.exception.QuadraNaoEncontradaException;
 
@@ -33,6 +34,19 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmailJaCadastradoException.class)
     public ResponseEntity<ErrorResponseDto> handleEmailJaCadastrado(EmailJaCadastradoException e) {
         HttpStatus status = HttpStatus.CONFLICT;
+
+        return new ResponseEntity<>(
+                new ErrorResponseDto(
+                        LocalDateTime.now(),
+                        status.value(),
+                        status.getReasonPhrase(),
+                        e.getMessage()),
+                status);
+    }
+
+    @ExceptionHandler(GestorJaCadastradoException.class)
+    public ResponseEntity<ErrorResponseDto> handleGestorJaCadastrado(GestorJaCadastradoException e) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
 
         return new ResponseEntity<>(
                 new ErrorResponseDto(

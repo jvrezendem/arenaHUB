@@ -62,6 +62,8 @@ export default function CriarContaGestor() {
 
             if (status === 409) {
                 setErros({ email: error.response.data?.msg || 'Este e-mail já está cadastrado.' })
+            } else if (status === 403) {
+                setErroGeral(error.response.data?.msg || 'Já existe um gestor cadastrado.')
             } else if (status === 400) {
                 setErroGeral('Verifique os dados informados e tente novamente.')
             } else {
